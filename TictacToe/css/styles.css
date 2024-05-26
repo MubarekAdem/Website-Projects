@@ -1,1 +1,30 @@
-styles.css
+body {
+
+  background-repeat: repeat;
+}
+h1 {
+  font-family: cursive;
+  color: white;
+  display: inline;
+  margin: auto;
+  font-size: 60px;
+}
+table {
+  margin: 0 auto 0 auto;
+  background-color: rgba(3, 13, 64, 0.811);
+  border: 3px solid;
+  border-color: white;
+  text-align: center;
+}
+td {
+  height: 100px;
+  width: 100px;
+  border: 2px solid;
+  border-color: white;
+  
+}
+.clickedO {
+  background-image: url("imaes/o.png");
+  background-size: cover;
+  background: transparent;
+}
