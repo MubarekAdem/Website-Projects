@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="attendance.css" />
+    <title>Student Attendance Taker</title>
+</head>
+<body>
+    
+<h2>Student Attendance Taker</h2>
+
+<button class="button"><a href="fetchattendance.html">Show Records</a></button>
+
+<form action="/api/postData" method="post" id="attendanceForm">
+    <label for="ATTENDANCE_DATE">Attendance Date:</label>
+    <input type="date" id="ATTENDANCE_DATE" name="attendance_date" required><br>
+
+    <h3>STUDENTS</h3>
+
+    <!-- This table will be used to display the students -->
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="studentsContainer"></tbody>
+    </table>
+
+    <button type="submit">Submit</button>
+</form>
+
+
+<script>
+    async function fetchStudentsAndAttendance() {
+        try {
+            const response = await fetch('/api/fetchData');
+            const data = await response.json();
+
+            const studentsContainer = document.getElementById('studentsContainer');
+
+            data.students.forEach(student => {
+                const label = document.createElement('label');
+                label.innerHTML = `
+                    ${student.student_name} (${student.student_id}):
+                    <select name="attendance_status_${student.student_id}" required>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                    </select>
+                    <br>
+                `;
+                studentsContainer.appendChild(label);
+            });
+
+        } catch (error) {
+            console.error('Error fetching data', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchStudentsAndAttendance);
+
+    document.getElementById('attendanceForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+
+    try {
+        const dropdowns = document.querySelectorAll('select[name^="attendance_status_"]');
+
+        // Collect selected students and their attendance status
+        const selectedStudents = {};
+        dropdowns.forEach(dropdown => {
+            const studentId = dropdown.name.split('_')[2];
+            const attendanceStatus = dropdown.value;
+            selectedStudents[studentId] = attendanceStatus;
+        });
+
+        // Send the data to the server
+        const response = await fetch('/api/postData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                attendance_date: document.getElementById('ATTENDANCE_DATE').value,
+                selectedStudents: selectedStudents,
+            }),
+        });
+
+        if (response.ok) {
+            console.log('Data inserted successfully');
+            
+            // Clear the form or reset the values
+            this.reset();
+        } else {
+            console.error('Failed to insert data:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+    }
+});
+</script>
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    // Check if the user is logged in (you can use more secure methods in a real application)
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    if (!isLoggedIn) {
+        // Redirect to the login page
+        window.location.href = 'login.html';
+    }
+});
+
+</script>
+
+</body>
+</html>

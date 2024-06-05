@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css" />
+    <title>Login</title>
+</head>
+<body>
+    <h1 class="bdutext">Bahir Dar -Univeristy <p>Attendance Taking System</p></h1>
+
+<h2>Login</h2>
+
+<form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <button type="submit" class="button">Login</button>
+</form>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
+
+        try {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // You can add your login validation logic here
+            // For simplicity, let's assume a basic check for a valid username and password
+            if (username === 'bduadmin' && password === '1234') {
+                // Set isLoggedIn to true in localStorage upon successful login
+                localStorage.setItem('isLoggedIn', true);
+
+                // Redirect to the main attendance page after successful login
+                window.location.href = 'attendance.html';
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    });
+</script>
+
+</body>
+</html>

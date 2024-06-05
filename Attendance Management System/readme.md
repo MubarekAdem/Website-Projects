@@ -1,0 +1,1 @@
+This Attendance Management System Was built using HTML , css And vanilla Javascript For frontend + Node with ExpressJS for the backend + MSSSQL for the database

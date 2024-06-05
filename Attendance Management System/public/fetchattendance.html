@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fetchattendance.css">
+    <title>Attendance Summary</title>
+</head>
+<body>
+    <h2>Attendance Summary</h2>
+    <form id="attendanceForm">
+        <label for="beginDate">Begin Date:</label>
+        <input type="date" id="beginDate" name="beginDate" required><br>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required><br>
+
+        <button type="button" onclick="getAttendanceSum()">Get Attendance Summary</button>
+    </form>
+
+    <div id="resultContainer"></div>
+
+    <script>
+        async function getAttendanceSum() {
+    const beginDate = document.getElementById('beginDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    try {
+        const response = await fetch(`/api/fetchAttendanceSum?beginDate=${beginDate}&endDate=${endDate}`);
+        const data = await response.json();
+
+        const resultContainer = document.getElementById('resultContainer');
+        resultContainer.innerHTML = ''; // Clear previous results
+
+        if (data.length > 0) {
+            const table = document.createElement('table');
+            const headerRow = table.insertRow(0);
+
+            for (const key in data[0]) {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+
+            data.forEach(student => {
+                const row = table.insertRow();
+                for (const key in student) {
+                    const cell = row.insertCell();
+                    cell.textContent = student[key];
+                }
+            });
+
+            resultContainer.appendChild(table);
+        } else {
+            resultContainer.textContent = 'No data available.';
+        }
+    } catch (error) {
+        console.error('Error fetching attendance sum', error);
+    }
+}
+
+    </script>
+</body>
+</html>

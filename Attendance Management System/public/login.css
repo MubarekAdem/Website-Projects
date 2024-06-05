@@ -1,0 +1,96 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #323054;
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+    color: #f5f1f1;
+}
+
+#loginForm {
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 0 auto; /* Center the form */
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3498db;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Hover effect with animation */
+  .button::before {
+    content: "";
+    position: absolute;
+    background-color: #2980b9;
+    width: 100%;
+    height: 0%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: height 0.3s ease;
+  }
+  
+  .button:hover::before {
+    height: 100%;
+  }
+  
+  .button span {
+    z-index: 1;
+    position: relative;
+  }
+
+button:hover {
+    background-color: #45a049;
+}
+h1{
+    text-align: center;
+    display: block;
+}
+img{
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+}
+.bdutext{
+    color: rgb(4, 127, 127);
+    background-color: white;
+    border-color: black;
+    text-decoration:dotted;
+
+}
+/* Add additional styling as needed */
